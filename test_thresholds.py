@@ -4,7 +4,7 @@ import unittest
 
 from threshold_logic import evaluate
 
-DATA = os.path.join(os.path.dirname(__file__), "..", "data", "sample_readings.csv")
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sample_readings.csv")
 
 
 class TestEvaluate(unittest.TestCase):

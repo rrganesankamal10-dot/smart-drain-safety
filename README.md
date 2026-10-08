@@ -6,7 +6,7 @@ Built by **KAMALRAJ G** (individual participant), PSNA College of Engineering an
 
 ## Why
 
-Drains are often inspected manually and only after a blockage or flood. This node gives early warning of overflow, suspected blockage and gas build-up, which protects residents and sanitation workers. See [docs/DESIGN.md](docs/DESIGN.md) for the full design.
+Drains are often inspected manually and only after a blockage or flood. This node gives early warning of overflow, suspected blockage and gas build-up, which protects residents and sanitation workers. See [DESIGN.md](DESIGN.md) for the full design and architecture diagram.
 
 ## Features
 
@@ -15,15 +15,17 @@ Drains are often inspected manually and only after a blockage or flood. This nod
 - Local buzzer and LED alert
 - Built-in web dashboard (`/`) and JSON endpoint (`/data`)
 
-## Repository layout
+## Files
 
-```
-firmware/smart_drain/   ESP32 Arduino sketch and config.h
-docs/DESIGN.md          Technical design document with architecture diagram
-data/sample_readings.csv  Sample sensor readings with expected status
-tests/                  Python tests for the alert rules
-LICENSE                 MIT
-```
+| File | Purpose |
+|---|---|
+| `smart_drain.ino` | ESP32 Arduino firmware |
+| `config.h` | Pins, Wi-Fi, calibration and alert thresholds |
+| `DESIGN.md` | Technical design document with architecture diagram |
+| `sample_readings.csv` | Sample sensor readings with the expected status |
+| `threshold_logic.py` | Reference implementation of the alert rules |
+| `test_thresholds.py` | Test cases for the alert rules |
+| `LICENSE` | MIT license |
 
 ## Hardware
 
@@ -33,12 +35,12 @@ LICENSE                 MIT
 - Gas sensor with analog output
 - Buzzer and LED (with resistor)
 
-Default pins are in `firmware/smart_drain/config.h` (level 34, gas 35, flow 27, buzzer 25, LED 26). **Edit them to match your wiring and sensors.**
+Default pins are in `config.h` (level 34, gas 35, flow 27, buzzer 25, LED 26). **Edit them to match your wiring and sensors.**
 
 ## Setup
 
 1. Install the Arduino IDE and add ESP32 board support (Boards Manager, "esp32 by Espressif Systems").
-2. Open `firmware/smart_drain/smart_drain.ino`.
+2. Put `smart_drain.ino` and `config.h` together in a folder named `smart_drain` (the Arduino IDE requires the sketch folder to match the sketch name) and open `smart_drain.ino`.
 3. Edit `config.h`: set `WIFI_SSID` and `WIFI_PASSWORD`, confirm the pins, and calibrate `LEVEL_RAW_FULL`, `FLOW_PULSES_PER_LPM` and the alert thresholds.
 4. Select your ESP32 board and port, then upload.
 5. Open the Serial Monitor at 115200 baud. It prints the dashboard address, for example `http://192.168.1.50`.
@@ -53,15 +55,14 @@ This project has no environment variables. All settings live in `config.h`. Do n
 The alert rules are tested in Python (no extra packages needed):
 
 ```
-cd tests
 python -m unittest test_thresholds -v
 ```
 
-The tests check every rule, the boundary values, and each row of `data/sample_readings.csv`.
+The tests check every rule, the boundary values, and each row of `sample_readings.csv`.
 
 ## Sample data
 
-`data/sample_readings.csv` contains synthetic readings used for testing the alert rules. It is not field data.
+`sample_readings.csv` contains synthetic readings used for testing the alert rules. It is not field data.
 
 ## Limitations
 

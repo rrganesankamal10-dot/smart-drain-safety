@@ -39,7 +39,7 @@ flowchart LR
 3. **BLOCKAGE_WARNING**: water level at or above `LEVEL_WARN_PCT` while flow is at or below `FLOW_LOW_LPM` (water is high but not moving).
 4. **NORMAL**: none of the above.
 
-Default thresholds are in `firmware/smart_drain/config.h` and must be calibrated for the real sensors and drain.
+Default thresholds are in `config.h` and must be calibrated for the real sensors and drain.
 
 ## 5. Data interface
 
@@ -51,7 +51,7 @@ Default thresholds are in `firmware/smart_drain/config.h` and must be calibrated
 
 ## 6. Testing
 
-`tests/threshold_logic.py` mirrors the firmware rules; `tests/test_thresholds.py` checks each rule, the boundary values, and every row of `data/sample_readings.csv`. Hardware testing (sensor calibration, alert behaviour in a real drain model) must be done on the physical prototype.
+`threshold_logic.py` mirrors the firmware rules; `test_thresholds.py` checks each rule, the boundary values, and every row of `sample_readings.csv`. Hardware testing (sensor calibration, alert behaviour in a real drain model) must be done on the physical prototype.
 
 ## 7. Limitations and future scope
 
